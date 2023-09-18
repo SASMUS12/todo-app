@@ -1,21 +1,27 @@
 import React from 'react';
-import styles from './TaskList.module.css'
-import {useSelector} from "react-redux";
-import { RootState } from "../../store/store";
+import TaskItem from "../TaskItem/TaskItem";
 
-
-const TaskList: React.FC = () => {
-    const tasks = useSelector((state: RootState) => state.tasks.tasks);
-  return (
-      <div>
-          <h2 className={styles.title}>todos</h2>
-          <ul className={styles.items}>
-              {tasks.map((task) => (
-                  <li className={styles.item} key={task.id}>{task.text}</li>
-              ))}
-          </ul>
-      </div>
-  )
+interface Task {
+    id: string;
+    text: string;
+    completed: boolean;
 }
+
+interface TaskListProps {
+    todos: Task[];
+}
+
+const TaskList: React.FC<TaskListProps> = ({ todos }) => (
+    <>
+        {todos.map(({ id, text, completed }) => (
+            <TaskItem
+                key={id}
+                id={id}
+                text={text}
+                completed={completed}
+            />
+        ))}
+    </>
+);
 
 export default TaskList;

@@ -1,31 +1,41 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTask } from "../../store/tasksSlice";
-import styles  from "./TaskForm.module.css";
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./TaskForm.module.scss";
+import { useAppDispatch } from "../../hooks";
+import { addTodo } from "../../store/tasksSlice";
 
-const TaskFrom: React.FC = () => {
-    const [text, setText] = useState('');
-    const dispatch = useDispatch();
+const TaskForm: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const [value, setValue] = useState<string>("");
 
-    const handleAddTask = () => {
-        if (text.trim() !== '') {
-            dispatch(addTask({ text }));
-            setText('');
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.value);
+    };
+
+    const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter" && value.trim() !== "") {
+            dispatch(addTodo(value.trim()));
+            setValue("");
         }
-    }
-  return (
-      <div>
-          <h2 className={styles.title}>Добавить задачу:</h2>
-          <input
-              type="text"
-              value={text}
-              className={styles.todo}
-              onChange={(e) => setText(e.target.value)}
-              placeholder={'Введите новую задачу'}
-          />
-          <button className={styles.button} onClick={handleAddTask}>Добавить</button>
-      </div>
-  )
-}
+    };
 
-export default TaskFrom;
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
+
+    return (
+        <input
+            type="text"
+            className={styles.todo_input}
+            placeholder="What needs to be done?"
+            value={value}
+            ref={inputRef}
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+        />
+    );
+};
+
+export default TaskForm;

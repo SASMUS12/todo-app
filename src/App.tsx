@@ -1,22 +1,43 @@
-import React from 'react';
-import './App.css';
-import {Provider} from "react-redux";
-import {store} from "./store/store";
-import TaskFrom from "./components/TaskForm/TaskForm";
-import TaskList from "./components/TaskList/TaskList";
-
+import React from "react";
+import styles from "./App.module.scss";
+import TaskForm from "../src/components/TaskForm/TaskForm";
+import TaskList from "../src/components/TaskList/TaskList";
+import TodoFooter from "../src/components/TaskFooter/TaskFooter";
+import {
+    useAppSelector,
+    useAppDispatch,
+} from "./hooks";
+import {
+    showActive,
+    showCompleted,
+    clearCompleted,
+    showAll,
+} from "./store/tasksSlice";
 
 const App: React.FC = () => {
-  return (
-      <Provider store={store}>
-          <div className='App'>
-              <h1 className='title'>todos</h1>
-              <TaskFrom />
-              <TaskList />
-          </div>
-      </Provider>
+    const dispatch = useAppDispatch();
+    const { todos, currentList } = useAppSelector((state) => state.todo);
 
-  );
-}
+    const activeItems = todos.filter((todo) => !todo.completed);
+
+    return (
+        <>
+            <header className={styles.header__title}>todos</header>
+            <div className={styles.content_wrapper}>
+                <TaskForm />
+                <TaskList todos={currentList} />
+                {todos.length !== 0 && (
+                    <TodoFooter
+                        itemsCount={activeItems.length}
+                        showAll={() => dispatch(showAll())}
+                        showActive={() => dispatch(showActive())}
+                        showCompleted={() => dispatch(showCompleted())}
+                        clearCompleted={() => dispatch(clearCompleted())}
+                    />
+                )}
+            </div>
+        </>
+    );
+};
 
 export default App;

@@ -1,32 +1,78 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuid } from "uuid";
+import { createSlice } from "@reduxjs/toolkit";
 
-interface Task {
-    id: number;
+interface Todo {
+    id: string;
     text: string;
+    completed: boolean;
 }
 
-interface TasksState {
-    tasks: Task[];
+interface TodoState {
+    todos: Todo[];
+    activeTodos: Todo[];
+    completedTodos: Todo[];
+    currentList: Todo[];
 }
 
-const initialState: TasksState = {
-    tasks: [],
+const initialState: TodoState = {
+    todos: [],
+    activeTodos: [],
+    completedTodos: [],
+    currentList: [],
 };
 
-const tasksSlice = createSlice({
-    name: 'tasks',
+const todoSlice = createSlice({
+    name: "todos",
     initialState,
     reducers: {
-        addTask: (state, action: PayloadAction<{ text: string }>) => {
-            const newTask: Task = {
-                id: Date.now(),
-                text: action.payload.text,
+        addTodo: (state, action) => {
+            const newTodo = {
+                id: uuid(),
+                text: action.payload,
+                completed: false,
             };
-            state.tasks.push(newTask);
+            state.todos.push(newTodo);
+            state.activeTodos.push(newTodo);
+            state.currentList = state.todos;
+        },
+        setCompleted: (state, action) => {
+            const todo = state.todos.find((t) => t.id === action.payload);
+            if (todo) {
+                todo.completed = !todo.completed;
+                const source = todo.completed ? state.activeTodos : state.completedTodos;
+                const target = todo.completed ? state.completedTodos : state.activeTodos;
+                source.splice(source.indexOf(todo), 1);
+                target.push(todo);
+            }
+            state.currentList = state.todos;
+        },
+        showAll: (state) => {
+            state.currentList = state.todos;
+        },
+        showActive: (state) => {
+            state.currentList = state.activeTodos;
+        },
+        showCompleted: (state) => {
+            state.currentList = state.completedTodos;
+        },
+        clearCompleted: (state) => {
+            state.completedTodos.length = 0;
+            state.todos.forEach((todo) => {
+                todo.completed = false;
+            });
+            state.activeTodos = [...state.todos];
+            state.currentList = state.todos;
         },
     },
 });
 
-export const { addTask } = tasksSlice.actions;
+export const {
+    addTodo,
+    setCompleted,
+    showAll,
+    showActive,
+    showCompleted,
+    clearCompleted,
+} = todoSlice.actions;
 
-export default tasksSlice.reducer;
+export default todoSlice.reducer;
