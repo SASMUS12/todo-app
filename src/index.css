@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Istok+Web&family=Karla&family=Kenia&family=Montserrat:wght@400;500;600&family=Roboto+Flex:opsz,wght@8..144,100;8..144,200;8..144,400&display=swap');
 
+
 * {
   box-sizing: border-box;
 }
@@ -21,7 +22,7 @@ body {
   font-style: normal;
   font-weight: 300;
   line-height: 1.4rem;
-  color: #000;
+  color: rgb(63, 58, 58);
   background-color: #e5e5e5;
 }
 

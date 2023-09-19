@@ -1,9 +1,9 @@
-.todo_item {
+.task_item {
   width: 100%;
   position: relative;
   display: flex;
   align-items: center;
-  padding: 20px 0 20px 50px;
+  padding: 20px 50px 20px 50px;
   background-color: rgb(249, 249, 249);
   border-bottom: 1px solid rgb(172, 172, 172);
 
@@ -13,7 +13,7 @@
 
   &__icon {
     position: absolute;
-    //left: 10px;
+    left: 10px;
 
     @media screen and(max-width: 576px) {
       width: 20px;
@@ -25,6 +25,5 @@
     text-decoration: line-through;
     color: rgb(112, 112, 112);
   }
-
 
 }
