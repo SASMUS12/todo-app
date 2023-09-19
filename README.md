@@ -7,7 +7,8 @@
 Поле для ввода новой задачи
 Списки всех задач, невыполненных и выполненных задач (по отдельности)
 
-Требования к коду:
+### Требования к коду:
+
 Приложение создано с использованием TypeScript, React и React Hooks
 Библиотеки компонент – на ваше усмотрение
 Ключевая на ваш взгляд функциональность обязательно покрыта тестами
@@ -55,8 +56,9 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### `npm run dev` 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Запуск проекта
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Ссылка на 

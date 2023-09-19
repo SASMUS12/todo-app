@@ -2,7 +2,7 @@ import React from "react";
 import check from "../../images/check.svg";
 import circle from "../../images/circle.svg";
 import { useAppDispatch } from "../../hooks";
-import { setCompleted, deleteTask } from "../../store/tasksSlice";
+import { setCompleted } from "../../store/tasksSlice";
 import styles from "./TaskItem.module.scss";
 
 interface TaskItemProps {
